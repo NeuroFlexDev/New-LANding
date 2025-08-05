@@ -1,0 +1,139 @@
+.aboutSection {
+    background: #0B0B0B;
+    position: relative;
+    padding: 3.75rem 10.27%; /* 60px сверху/снизу, 10.27% ≈148px слева/справа на 1441px */
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 80px; /* ≈32px */
+    align-items: start;
+  }
+  
+  .timeline {
+    position: relative;
+  }
+  
+  .stepNumber {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;      /* 16px */
+    line-height: 1.25rem; /* 20px */
+    color: #FFFFFF;
+  }
+  
+  .lineVertical {
+    position: absolute;
+    top: 1.875rem; /* 30px below stepNumber */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 6.375rem; /* 102px */
+    background: #FFFFFF;
+  }
+  
+  .rotatedLabel {
+    position: absolute;
+    top: 13rem; /* ≈208px from top of section */
+    left: -0.2rem; /* чуть сместить влево */
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    color: #FFFFFF;
+  }
+  
+  .headingMain {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;      /* 32px */
+    line-height: 4.4375rem; /* 39px */
+    color: #FFFFFF;
+    margin: 0;
+  }
+  
+  .headingSecondary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;      /* 32px */
+    line-height: 4.4375rem; /* 39px */
+    color: rgba(255, 255, 255, 0.5);
+    margin: 1rem 0 0;
+  }
+  
+  .lineHorizontal {
+    grid-column: 1 / -1;
+    margin: 1.875rem 0; /* ≈30px */
+    height: 2px;
+    background: #6E40C9;
+  }
+
+  .underline{
+    display: flex;
+    gap: 100px;
+  }
+  
+  .description {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;    /* 20px */
+    line-height: 1.5rem;   /* 24px */
+    color: #FFFFFF;
+    margin: 0 0 2rem;
+  }
+  
+  .projectsBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 3.125rem; /* 20px 50px */
+    gap: 0.625rem;             /* 10px */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;      /* 16px */
+    line-height: 1.25rem; /* 20px */
+    color: #FFFFFF;
+    border: 1px solid #6E40C9;
+    background: none;
+    border-radius: 0.9375rem; /* 15px */
+    cursor: pointer;
+    height: 5%;
+  }
+  
+  .arrowIcon {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border-top: 2px solid #FFFFFF;
+    border-right: 2px solid #FFFFFF;
+    transform: rotate(-90deg);
+  }
+  
+  /* Мобильная версия */
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+    .timeline {
+      display: none;
+    }
+    .headingMain,
+    .headingSecondary {
+      text-align: center;
+    }
+    .lineHorizontal {
+      margin: 1rem auto;
+      width: 50px;
+    }
+    .description {
+      text-align: center;
+    }
+    .projectsBtn {
+      margin: 0 auto;
+    }
+  }
+  

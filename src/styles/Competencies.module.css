@@ -1,0 +1,174 @@
+.competenciesSection {
+    position: relative;
+    background: #0B0B0B;
+    padding: 3.75rem 10.27%; /* ≈60px сверху/снизу, ≈148px по бокам на 1441px */
+    overflow: hidden;
+  }
+  
+  /* Размытый эллипс */
+  .bgEllipse {
+    position: absolute;
+    width: 36.6vw;     /* 528/1441*100 */
+    height: 21.0vw;    /* 303.4/1441*100 */
+    left: 28.4vw;      /* 409/1441*100 */
+    top: 44.8vh;       /* 648/1456*100 */
+    background: linear-gradient(180deg, #A67EFF 0%, #734BFF 174.03%);
+    background-blend-mode: plus-lighter;
+    filter: blur(350px);
+    transform: rotate(15deg);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  /* Сетка: таймлайн + контент */
+  .container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 2rem;  /* ≈32px */
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Таймлайн слева */
+  .timeline {
+    position: relative;
+  }
+  .stepNumber {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;      /* 16px */
+    line-height: 1.25rem; /* 20px */
+    color: #FFFFFF;
+  }
+  .lineVertical {
+    position: absolute;
+    top: 1.875rem; /* 30px */
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+    width: 102px;
+    border-top: 1px solid #FFFFFF;
+  }
+  .rotatedLabel {
+    position: absolute;
+    top: 13rem; /* ≈208px */
+    left: -0.5rem;
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #FFFFFF;
+  }
+  
+  /* Основные заголовки и CTA */
+  .contentHeader {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .titles {
+    max-width: 70%;
+  }
+  .titlePrimary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(24px, 4vw, 32px);
+    line-height: 2.4375rem; /* 39px */
+    color: #FFFFFF;
+    margin: 0;
+  }
+  .titleSecondary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(24px, 4vw, 32px);
+    line-height: 2.4375rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0.5rem 0 0;
+  }
+  .ctaText {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(16px, 2.5vw, 20px);
+    line-height: 1.5rem; /* 24px */
+    color: #6E40C9;
+    margin: 1rem 0 0;
+  }
+  .discussBtn {
+    flex-shrink: 0;
+    padding: 1.25rem 3.125rem; /* 20px 50px */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem; /* 16px */
+    line-height: 1.25rem; /* 20px */
+    color: #FFFFFF;
+    background: transparent;
+    border: 1px solid #6E40C9;
+    border-radius: 0.9375rem; /* 15px */
+    cursor: pointer;
+  }
+  
+  /* Сетка карточек */
+  .cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  /* Одна карточка */
+  .card {
+    position: relative;
+    background: #0B0B0B; /* совпадает с фоном секции */
+    border: 1px solid #212020;
+    border-radius: 0.625rem; /* 10px */
+    padding: 1.25rem; /* 20px */
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+  }
+  .cardIcon {
+    width: 5.3125rem;  /* 85px */
+    height: 5.3125rem;
+    margin: 0 auto 1rem;
+    /* здесь можно вставить SVG-иконку или CSS-вектор */
+    background: rgba(110, 64, 201, 0.2);
+    border-radius: 50%;
+  }
+  .cardTitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(20px, 2.5vw, 32px);
+    line-height: 2.4375rem; /* 39px */
+    color: #FFFFFF;
+    margin: 0.5rem 0;
+  }
+  .cardDesc {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: clamp(14px, 2vw, 16px);
+    line-height: 1.25rem; /* 20px */
+    color: #FFFFFF;
+    margin: 0;
+  }
+  
+  /* Адаптив */
+  @media (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+    }
+    .timeline { display: none; }
+    .contentHeader {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .titles { max-width: 100%; }
+    .discussBtn { margin-top: 1rem; }
+  }
+  

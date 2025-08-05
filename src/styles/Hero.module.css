@@ -1,0 +1,126 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* на весь экран */
+  background: #0B0B0B;
+  overflow: hidden;
+  /* вертикальные линии через repeating-linear-gradient */
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 3px,
+    transparent 3px,
+    transparent 132px
+  );
+  background-position: 60px 0; /* первый шлейф на 60px */
+}
+
+.ellipsePrimary {
+  position: absolute;
+  width: 36.6vw;  /* 528/1441*100 */
+  height: 36.6vw;
+  left: 31.6vw;   /* 456/1441*100 */
+  top: -6.6vh;    /* -68/1024*100 */
+  background: linear-gradient(180deg, #a77eff6e 0%, #724bff5b 100%);
+  background-blend-mode: plus-lighter;
+  filter: blur(700px);
+  border-radius: 50%;
+}
+
+.ellipseSecondary {
+  position: absolute;
+  width: 24vw;    /* 346/1441*100 */
+  height: 24vw;
+  left: 71.75vw;  /* 1034/1441*100 */
+  top: 52.05vh;   /* 533/1024*100 */
+  background: #c8a8ff35;
+  filter: blur(700px);
+  border-radius: 50%;
+}
+
+.ellipseTertiary {
+  position: absolute;
+  width: 29.7vw;  /* 428/1441*100 */
+  height: 29.7vw;
+  left: -2.22vw;  /* -32/1441*100 */
+  top: 34.06vh;   /* 349/1024*100 */
+  background: #2d1f478b;
+  filter: blur(200px);
+  border-radius: 50%;
+}
+
+.heroContent {
+  position: absolute;
+  top: 34%;       /* 349/1024 ≈ 34% */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 1096px;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 0 1rem;
+}
+
+.heroContent h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 78px;
+  margin: 0;
+}
+
+.heroContent p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: clamp(14px, 2.5vw, 16px);
+  line-height: 20px;
+  margin: 5rem 0 0;
+}
+
+.buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.primaryBtn {
+  padding: 20px 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #FFFFFF;
+  background: #6E40C9;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.secondaryBtn {
+  padding: 20px 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #FFFFFF;
+  background: transparent;
+  border: 1px solid #6E40C9;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .heroContent h1 {
+    font-size: clamp(28px, 6vw, 48px);
+  }
+  .heroContent p {
+    font-size: clamp(12px, 3vw, 14px);
+  }
+  .primaryBtn,
+  .secondaryBtn {
+    padding: 15px 30px;
+    font-size: 14px;
+  }
+}

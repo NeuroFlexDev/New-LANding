@@ -1,0 +1,111 @@
+.header {
+  position: absolute;
+  top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 120px);
+  max-width: 1320px;
+  height: 70px;
+  background: rgba(110, 64, 201, 0.35);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 10;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px; /* толщина границы */
+  border-radius: 10px;
+  background: linear-gradient(180deg, #A67EFF, #734BFF);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+
+.logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem; /* 20px */
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem; /* 30px */
+}
+
+.navLink {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem; /* 20px */
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}
+
+.contactBtn {
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 1.25rem; /* 20px */
+  color: #FFFFFF;
+  background: #2D1F47;
+  padding: 13px 20px;
+  border-radius: 7px;
+  cursor: pointer;
+  z-index: 1;
+  overflow: hidden;
+  border: none; /* отключаем обычную рамку */
+}
+
+.contactBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #A67EFF, #734BFF);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+
+@media (max-width: 768px) {
+  .header {
+    top: 20px;
+    height: auto;
+    padding: 0.5rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .nav {
+    gap: 1rem;
+  }
+  .navLink,
+  .contactBtn {
+    font-size: 1rem;
+  }
+}

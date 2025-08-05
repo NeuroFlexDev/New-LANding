@@ -1,0 +1,150 @@
+.processSection {
+    background: #0B0B0B;
+    position: relative;
+    padding: 3.75rem 10.27%; /* 60px сверху/снизу, ≈148px по бокам на 1441px */
+  }
+  
+  .processContainer {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 2rem; /* ≈32px */
+    align-items: start;
+  }
+  
+  .stepNumber {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;      /* 16px */
+    line-height: 1.25rem; /* 20px */
+    color: #FFFFFF;
+  }
+  
+  .lineVertical {
+    position: absolute;
+    top: 1.875rem; /* 30px ниже номера */
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+    width: 102px;  /* как в макете */
+    height: 0;
+    border: 1px solid #FFFFFF;
+  }
+  
+  .rotatedLabel {
+    position: absolute;
+    top: 13rem; /* ≈208px */
+    left: -0.2rem;
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #FFFFFF;
+  }
+  
+  .titleMain {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;      /* 32px */
+    line-height: 2.4375rem; /* 39px */
+    color: #FFFFFF;
+    margin: 0;
+  }
+  
+  .titleSecondary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 2.4375rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 1rem;
+  }
+  
+  .separator {
+    grid-column: 1 / -1;
+    margin: 17.34rem 0 0; /* ≈445px сверху */
+    height: 0;
+    border-top: 5px solid #C8A8FF;
+    transform: rotate(180deg);
+  }
+  
+  .stepsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .stepBox {
+    background: none;
+    text-align: center;
+  }
+  
+  .stepBox p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;    /* 20px */
+    line-height: 1.5rem;   /* 24px */
+    color: #FFFFFF;
+    margin: 0;
+  }
+  
+  /* Точки и соединители */
+  .connector {
+    position: absolute;
+    width: 49px;
+    height: 0;
+    border: 5px solid #C8A8FF;
+  }
+  
+  .dot {
+    position: absolute;
+    width: 1.25rem; /* 20px */
+    height: 1.25rem;
+    background: #C8A8FF;
+    border-radius: 50%;
+  }
+  
+  /* Позиционирование каждого шага: */
+  .step1  .connector { top: 396px;  left: 315px; transform: rotate(-90deg); }
+  .step1  .dot       { top: 381px;  left: 302px; }
+  
+  .step2  .connector { top: 445px;  left: 514px; transform: rotate(90deg); }
+  .step2  .dot       { top: 489px;  left: 507px; }
+  
+  .step3  .connector { top: 396px;  left: 766px; transform: rotate(-90deg); }
+  .step3  .dot       { top: 381px;  left: 753px; }
+  
+  .step4  .connector { top: 445px;  left: 1006px; transform: rotate(90deg); }
+  .step4  .dot       { top: 489px;  left: 999px; }
+  
+  .step5  .connector { top: 396px;  left: 1248px; transform: rotate(-90deg); }
+  .step5  .dot       { top: 381px;  left: 1235px; }
+  
+  /* Мобильная версия */
+  @media (max-width: 768px) {
+    .processContainer {
+      grid-template-columns: 1fr;
+    }
+    .stepNumber,
+    .lineVertical,
+    .rotatedLabel {
+      display: none;
+    }
+    .titleMain,
+    .titleSecondary,
+    .separator {
+      text-align: center;
+      margin: 1rem auto;
+    }
+    .separator { width: 50px; }
+    .stepsGrid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+  }
+  

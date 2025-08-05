@@ -1,0 +1,17 @@
+/* Обнуление и базовые стили */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  background: #0B0B0B;
+  color: #FFFFFF;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}

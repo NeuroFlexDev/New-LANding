@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../styles/About.module.css';
+import arrowIcon from '../assets/icons/arrowLeft.svg';
 
 export default function About() {
   return (
@@ -22,20 +23,21 @@ export default function About() {
           <div className={styles.lineHorizontal}></div>
 
           <div className={styles.underline}>
-
-            <button className={styles.projectsBtn}>
-                Наши проекты
-                <span className={styles.arrowIcon}></span>
-            </button>
             <p className={styles.description}>
-                NeuroFlex — это студия, запускающая AI-стартапы нового
-                поколения. Мы объединяем исследовательский подход,
-                инженерную строгость и предпринимательскую интуицию, чтобы
-                строить масштабируемые продукты на основе машинного
-                обучения и искусственного интеллекта. Вместо того чтобы
-                делать "еще одно ML-приложение", мы создаем стартапы, которые
-                меняют парадигмы в своей нише.
+              NeuroFlex — это студия, запускающая AI-стартапы нового
+              поколения. Мы объединяем исследовательский подход,
+              инженерную строгость и предпринимательскую интуицию, чтобы
+              строить масштабируемые продукты на основе машинного
+              обучения и искусственного интеллекта. Вместо того чтобы
+              делать "еще одно ML-приложение", мы создаем стартапы, которые
+              меняют парадигмы в своей нише.
             </p>
+            <button className={styles.projectsBtn}>
+              Наши проекты
+              <span className={styles.arrowIcon}>
+                <img src={arrowIcon} alt="->" />
+              </span>
+            </button>
           </div>
         </div>
       </div>

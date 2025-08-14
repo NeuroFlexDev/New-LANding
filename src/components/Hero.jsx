@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import styles from '../styles/Hero.module.css';
 
 export default function Hero() {
+  const [showHeader, setShowHeader] = useState(true);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setShowHeader(window.innerWidth > 790);
+    };
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   return (
     <section className={styles.hero}>
       {/* Хедер-плашка поверх геро */}
-      <Header />
+      {showHeader && <Header />}
 
       {/* Размытые эллипсы */}
       <div className={styles.ellipsePrimary} />

@@ -144,7 +144,7 @@
   }
 
   .heroContent {
-    top: 40%;
+    top: 30%;
     width: 90%;
   }
 
@@ -178,7 +178,7 @@
 
 @media (max-width: 320px) {
   .heroContent {
-    top: 40%;
+    top: 30%;
   }
   
   .heroContent h1 {

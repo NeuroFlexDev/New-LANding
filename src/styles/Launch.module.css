@@ -121,4 +121,11 @@
       font-size: 0.875rem;
     }
   }
+
+  @media (max-width: 510px) {
+    .btn {
+      width: 100%;
+      padding-bottom: 20px;
+    }
+  }
   

@@ -21,11 +21,9 @@ export default function Launch() {
         <div className={styles.buttons}>
           <button className={`${styles.btn} ${styles.primary}`}>
             Оставить заявку
-            <span className={styles.icon} />
           </button>
           <button className={`${styles.btn} ${styles.secondary}`}>
             Написать в Telegram
-            <span className={styles.icon} />
           </button>
         </div>
       </div>

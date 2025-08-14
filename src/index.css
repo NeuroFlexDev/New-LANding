@@ -15,3 +15,10 @@ html, body {
   margin: 0 auto;
   padding: 0 1rem;
 }
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./assets/fonts/Montserrat-VariableFont_wght.ttf');
+  font-weight: 400;
+  font-size: normal;
+}

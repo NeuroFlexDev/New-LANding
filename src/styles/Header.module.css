@@ -1,8 +1,7 @@
 .header {
-  position: absolute;
-  top: 65px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 65px;
+  margin-left: auto;
+  margin-right: auto;
   width: calc(100% - 120px);
   max-width: 1320px;
   height: 70px;
@@ -95,6 +94,8 @@
 
 @media (max-width: 768px) {
   .header {
+    display: flex;
+    flex-direction: column;
     top: 20px;
     height: auto;
     padding: 0.5rem 1rem;
@@ -102,7 +103,10 @@
     gap: 0.5rem;
   }
   .nav {
-    gap: 1rem;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    gap: 0.5rem;
   }
   .navLink,
   .contactBtn {

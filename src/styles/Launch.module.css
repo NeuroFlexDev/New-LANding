@@ -129,3 +129,206 @@
     }
   }
   
+  .section {
+    position: relative;
+    background: #0B0B0B;
+    overflow: hidden;
+    padding: 3.75rem 10.27%;
+  
+    /* интерактив */
+    --mx: 0;
+    --my: 0;
+    --in-duration: 900ms;
+  }
+  
+  /* плавный вход */
+  .section .content,
+  .section .ellipse,
+  .section .dotsOffset {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--in-duration) ease, transform var(--in-duration) ease;
+  }
+  .in .content,
+  .in .ellipse,
+  .in .dotsOffset {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .in .ellipse   { transition-delay: 60ms; }
+  .in .content   { transition-delay: 120ms; }
+  
+  /* Фон из точек — лёгкий «скролл» + параллакс */
+  .dotsOffset {
+    position: absolute;
+    inset: 0;
+    background: url('../assets/DotsOffset8px.png') repeat center/auto;
+    z-index: 0;
+    animation: dotsPan 30s linear infinite;
+    transform: translate(calc(var(--mx) * 12px), calc(var(--my) * 12px));
+  }
+  @keyframes dotsPan {
+    0%   { background-position: 0 0; }
+    100% { background-position: 240px 0; }
+  }
+  
+  /* Размытый эллипс — «дыхание» + параллакс */
+  .ellipse {
+    position: absolute;
+    width: 36.6vw;
+    height: 36.6vw;
+    left: 32.5vw;
+    top: 17px;
+    background: radial-gradient(60% 80% at 50% 50%, #A67EFF 0%, #734BFF 100%);
+    background-blend-mode: plus-lighter;
+    filter: blur(350px);
+    border-radius: 50%;
+    z-index: 0;
+    transform: translate(calc(var(--mx) * 28px), calc(var(--my) * 28px));
+    animation: breathe 10s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { filter: blur(350px); opacity: .9; }
+    50%     { filter: blur(380px); opacity: 1; }
+  }
+  
+  /* Контент */
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 1144px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 9.5rem;
+  }
+  
+  /* Заголовок — деликатный шиммер */
+  .title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(32px, 8vw, 64px);
+    line-height: 1.21875;
+    margin: 0 auto 2rem;
+  
+    background: linear-gradient(90deg, #fff, #d8c7ff, #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% 100%;
+    animation: shimmer 8.5s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: 0% 0; }
+  }
+  
+  .subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(14px, 2.5vw, 16px);
+    line-height: 1.25;
+    color: #FFFFFF;
+    margin: 0 auto 3rem;
+    opacity: .95;
+  }
+  
+  /* Кнопки — свечение + риппл + фокус */
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 3.125rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: 0.9375rem;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+  
+    transition: transform 180ms ease, box-shadow 220ms ease, background 220ms ease, border-color 220ms ease;
+    transform: translateZ(0);
+  }
+  .btn:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgba(255,255,255,.7),
+      0 0 0 6px rgba(115,75,255,.35);
+  }
+  
+  /* primary — стеклянный с подсветкой */
+  .primary {
+    background: #6E40C9;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 12px 28px -14px rgba(110,64,201,.55);
+  }
+  .primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px -14px rgba(110,64,201,.65);
+  }
+  
+  /* secondary — прозрачный с градиентной рамкой */
+  .secondary {
+    background: rgba(255,255,255,0.02);
+    color: #FFFFFF;
+    border: 1px solid #6E40C9;
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 0 0 0 rgba(110,64,201,0);
+  }
+  .secondary:hover {
+    transform: translateY(-2px);
+    background: rgba(110,64,201,0.1);
+    border-color: #8c67ff;
+    box-shadow: inset 0 0 30px rgba(110,64,201,0.12);
+  }
+  
+  /* Риппл для обеих кнопок */
+  .ripple {
+    pointer-events: none;
+    position: absolute;
+    width: 12px; height: 12px;
+    left: calc(var(--rx, 50%) - 6px);
+    top:  calc(var(--ry, 50%) - 6px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(166,126,255,0.45) 0%, rgba(166,126,255,0) 70%);
+    transform: scale(0);
+    opacity: 0;
+  }
+  .btn:active .ripple {
+    animation: rippleAnim 700ms ease-out forwards;
+  }
+  @keyframes rippleAnim {
+    0% { transform: scale(0);  opacity: .35; }
+    60%{ transform: scale(18); opacity: .18; }
+    100%{transform: scale(26); opacity: 0; }
+  }
+  
+  /* Мобильный адаптив (как у тебя) */
+  @media (max-width: 768px) {
+    .content { padding-top: 6rem; }
+    .title   { font-size: clamp(28px, 10vw, 48px); }
+    .subtitle{ font-size: clamp(12px, 4vw, 14px); }
+    .buttons { gap: .5rem; }
+    .btn { padding: 1rem 2rem; font-size: .875rem; }
+  }
+  @media (max-width: 510px) {
+    .btn { width: 100%; padding-bottom: 20px; }
+  }
+  
+  /* уважение prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .section, .section * {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+  }

@@ -216,3 +216,293 @@
       margin-top: 20px;
     }
   }
+
+  .contactSection {
+    position: relative;
+    background: #0B0B0B;
+    padding: 3.75rem 10.27%;
+    overflow: hidden;
+  
+    /* интерактив */
+    --mx: 0;
+    --my: 0;
+    --in-duration: 900ms;
+  }
+  
+  /* вход секции */
+  .contactSection .container,
+  .contactSection .timeline,
+  .contactSection .header,
+  .contactSection .cardsGrid {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--in-duration) ease, transform var(--in-duration) ease;
+  }
+  .in .container,
+  .in .timeline,
+  .in .header,
+  .in .cardsGrid {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .in .header { transition-delay: 90ms; }
+  .in .cardsGrid { transition-delay: 140ms; }
+  
+  /* Размытый эллипс — дыхание + параллакс */
+  .bgEllipse {
+    position: absolute;
+    width: 36.6vw;
+    height: 21.0vw;
+    left: 1.6vw;
+    top: 5.2vh;
+    background: radial-gradient(60% 80% at 50% 50%, #A67EFF 0%, #734BFF 100%);
+    background-blend-mode: plus-lighter;
+    filter: blur(350px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(calc(var(--mx) * 24px), calc(var(--my) * 24px));
+    animation: breathe 10s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { filter: blur(350px); opacity: 0.9; }
+    50%     { filter: blur(380px); opacity: 1; }
+  }
+  
+  /* Таймлайн — растущая линия */
+  .lineVertical {
+    width: 1px;
+    background: linear-gradient(180deg, #FFFFFF, rgba(255,255,255,0.25));
+    margin: 15px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .in .lineVertical::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 100%;
+    background: linear-gradient(180deg, #6E40C9, #A67EFF);
+    transform: translateY(-100%);
+    animation: growLine 900ms ease forwards;
+  }
+  @keyframes growLine { to { transform: translateY(0); } }
+  
+  /* Заголовки — деликатный шиммер у secondary */
+  .titleSecondary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(24px, 4vw, 32px);
+    line-height: 2.4375rem;
+    color: #FFFFFF;
+    margin: 0;
+  
+    background: linear-gradient(90deg, #fff, #d8c7ff, #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% 100%;
+    animation: shimmer 9s linear infinite;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:0 0} }
+  
+  .titlePrimary {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: clamp(24px, 4vw, 32px);
+    line-height: 2.4375rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0.5rem 0 1rem;
+  }
+  
+  /* CTA кнопка — свечение + риппл + стрелка */
+  .viewAllBtn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1.25rem 3.125rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #FFFFFF;
+    background: none;
+    border: 1px solid #6E40C9;
+    border-radius: 0.9375rem;
+    cursor: pointer;
+  
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+    box-shadow: 0 12px 28px -14px rgba(110,64,201,0.35);
+    backdrop-filter: blur(6px);
+  }
+  .viewAllBtn:hover {
+    transform: translateY(-2px);
+    border-color: #8c67ff;
+    background: rgba(110,64,201,0.1);
+    box-shadow: 0 16px 36px -14px rgba(110,64,201,0.55);
+  }
+  .viewAllBtn img { transition: transform 180ms ease, opacity 180ms ease; }
+  .viewAllBtn:hover img { transform: translateX(4px); opacity: 0.95; }
+  
+  /* Риппл */
+  .ripple {
+    pointer-events: none;
+    position: absolute;
+    width: 12px; height: 12px;
+    left: calc(var(--rx, 50%) - 6px);
+    top:  calc(var(--ry, 50%) - 6px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(166,126,255,0.45) 0%, rgba(166,126,255,0) 70%);
+    transform: scale(0);
+    opacity: 0;
+  }
+  .viewAllBtn:active .ripple {
+    animation: rippleAnim 700ms ease-out forwards;
+  }
+  @keyframes rippleAnim {
+    0% { transform: scale(0);  opacity: .35; }
+    60%{ transform: scale(18); opacity: .18; }
+    100%{transform: scale(26); opacity: 0; }
+  }
+  
+  /* Сетка карточек и карточки — ступенчатый вход + hover */
+  .cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 161px;
+    will-change: transform;
+  }
+  .card {
+    position: relative;
+    background: rgba(255,255,255,0.02);
+    border-radius: 0.9375rem;
+    overflow: hidden;
+    padding: 1.25rem;
+    box-sizing: border-box;
+    text-align: left;
+    border: 1px solid rgba(110, 64, 201, 0.5);
+    backdrop-filter: blur(2.5px);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+  
+    opacity: 0;
+    transform: translateY(14px);
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, opacity var(--in-duration) ease;
+  }
+  .in .card { opacity: 1; transform: translateY(0); }
+  .d0 { transition-delay: 80ms; }
+  .d1 { transition-delay: 140ms; }
+  .d2 { transition-delay: 200ms; }
+  
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: #8c67ff;
+    box-shadow: 0 26px 70px -30px rgba(110, 64, 201, 0.35);
+  }
+  
+  /* свечение по углам */
+  .glow {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background:
+      radial-gradient(40% 50% at 20% 0%, rgba(166,126,255,0.18), rgba(166,126,255,0) 60%),
+      radial-gradient(40% 50% at 80% 100%, rgba(115,75,255,0.18), rgba(115,75,255,0) 60%);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    z-index: -1;
+  }
+  .card:hover .glow { opacity: 1; }
+  
+  /* иконка — лёгкий «парящий» эффект */
+  .cardIcon img {
+    width: 85px; height: 85px;
+    transform: translateZ(0);
+    transition: transform 260ms ease, filter 260ms ease;
+    filter: drop-shadow(0 8px 20px rgba(110,64,201,0.25));
+  }
+  .card:hover .cardIcon img {
+    transform: translateY(-4px) scale(1.03);
+    filter: drop-shadow(0 12px 28px rgba(110,64,201,0.35));
+  }
+  
+  /* остальное из твоего файла (container, timeline, rotatedLabel, header и адаптив) — без изменений */
+  .container {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .stepNumber {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #FFFFFF;
+  }
+  .rotatedLabel {
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #FFFFFF;
+  }
+  .header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+  
+  /* desktop timeline geometry */
+  @media (min-width: 769px) {
+    .timeline { position: relative; display: block; }
+    .lineVertical {
+      position: absolute; top: 30px; left: 50%;
+      transform: translateX(-50%); height: 102px; margin: 0;
+    }
+    .rotatedLabel {
+      position: absolute; top: 245px; left: -0.2rem;
+      transform: rotate(-90deg); transform-origin: left top;
+    }
+  }
+  
+  /* адаптив */
+  @media (max-width: 768px) {
+    .container { grid-template-columns: 1fr; row-gap: 20px; }
+    .timeline {
+      flex-direction: row; gap: 10px; justify-content: center; align-items: center;
+      margin-bottom: 20px; width: 100%;
+    }
+    .lineVertical { height: 1px; width: 100%; margin: 0 10px; }
+    .rotatedLabel { position: static; transform: none; white-space: nowrap; }
+  
+    .header { text-align: left; flex-direction: column; gap: 20px; }
+    .viewAllBtn { margin: 0 auto 1rem; }
+  
+    .cardsGrid { grid-template-columns: 1fr; margin-top: 20px; }
+  }
+  
+  /* уважение prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .contactSection, .contactSection * {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+  

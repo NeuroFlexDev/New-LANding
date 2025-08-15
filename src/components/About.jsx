@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from '../styles/About.module.css';
 import arrowIcon from '../assets/icons/arrowLeft.svg';
 
 export default function About() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) el.classList.add(styles.in);
+        });
+      },
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const scrollTo = (id) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
   return (
-    <section className={styles.aboutSection}>
+    <section id="about" className={styles.aboutSection} ref={sectionRef}>
       <div className={styles.container}>
         <div className={styles.timeline}>
           <div className={styles.stepNumber}>1</div>
@@ -32,11 +53,16 @@ export default function About() {
               делать "еще одно ML-приложение", мы создаем стартапы, которые
               меняют парадигмы в своей нише.
             </p>
-            <button className={styles.projectsBtn}>
+
+            <button
+              className={styles.projectsBtn}
+              onClick={() => scrollTo('cases')}
+            >
               Наши проекты
               <span className={styles.arrowIcon}>
                 <img src={arrowIcon} alt="->" />
               </span>
+              <span className={styles.ripple} aria-hidden="true" />
             </button>
           </div>
         </div>

@@ -315,3 +315,255 @@
   .mobileCardButton:hover {
     opacity: 0.9;
   }
+
+  .projectsSection {
+    position: relative;
+    background: #0B0B0B;
+    padding: 3.75rem 10.27%;
+    overflow: hidden;
+  
+    /* интерактив */
+    --mx: 0;
+    --my: 0;
+    --in-duration: 900ms;
+  }
+  
+  /* плавный вход ключевых узлов */
+  .projectsSection .container,
+  .projectsSection .timeline,
+  .projectsSection .header,
+  .projectsSection .casesGrid,
+  .projectsSection .mobileCases {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--in-duration) ease, transform var(--in-duration) ease;
+  }
+  .in .container,
+  .in .timeline,
+  .in .header,
+  .in .casesGrid,
+  .in .mobileCases {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .in .header { transition-delay: 90ms; }
+  .in .casesGrid, .in .mobileCases { transition-delay: 140ms; }
+  
+  /* Таймлайн: «растущая» вертикальная линия */
+  .lineVertical {
+    width: 1px;
+    background: linear-gradient(180deg, #FFFFFF, rgba(255,255,255,0.25));
+    margin: 15px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .in .lineVertical::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 100%;
+    background: linear-gradient(180deg, #6E40C9, #A67EFF);
+    transform: translateY(-100%);
+    animation: growLine 900ms ease forwards;
+  }
+  @keyframes growLine { to { transform: translateY(0); } }
+  
+  /* Заголовок — деликатный шиммер у titleSecondary/контраста */
+  .titleSecondary {
+    background: linear-gradient(90deg, #fff, #d8c7ff, #fff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% 100%;
+    animation: shimmer 9s linear infinite;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:0 0} }
+  
+  /* Эллипс — «дыхание» и параллакс */
+  .blurEllipse {
+    position: absolute;
+    width: 36.6vw;
+    height: 21.0vw;
+    left: 44.2vw;
+    top: -3.5rem;
+    background: radial-gradient(60% 80% at 50% 50%, #A67EFF 0%, #734BFF 100%);
+    background-blend-mode: plus-lighter;
+    filter: blur(350px);
+    transform: rotate(15deg)
+               translate(calc(var(--mx) * 24px), calc(var(--my) * 24px));
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: breathe 10s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { filter: blur(350px); opacity: 0.9; }
+    50%     { filter: blur(380px); opacity: 1; }
+  }
+  
+  /* CTA «Посмотреть все работы» — свечение + риппл + стрелка */
+  .viewAllBtn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
+    box-shadow: 0 12px 28px -14px rgba(110,64,201,0.35);
+    backdrop-filter: blur(6px);
+  }
+  .viewAllBtn:hover {
+    transform: translateY(-2px);
+    border-color: #8c67ff;
+    background: rgba(110,64,201,0.1);
+    box-shadow: 0 16px 36px -14px rgba(110,64,201,0.55);
+  }
+  .viewAllBtn img { transition: transform 180ms ease, opacity 180ms ease; }
+  .viewAllBtn:hover img { transform: translateX(4px); opacity: 0.95; }
+  
+  /* Общий риппл для кнопок */
+  .ripple {
+    pointer-events: none;
+    position: absolute;
+    width: 12px; height: 12px;
+    left: calc(var(--rx, 50%) - 6px);
+    top:  calc(var(--ry, 50%) - 6px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(166,126,255,0.45) 0%, rgba(166,126,255,0) 70%);
+    transform: scale(0);
+    opacity: 0;
+  }
+  .viewAllBtn:active .ripple,
+  .caseArrow:active .ripple,
+  .mobileCardButton:active .ripple {
+    animation: rippleAnim 700ms ease-out forwards;
+  }
+  @keyframes rippleAnim {
+    0% { transform: scale(0);  opacity: .35; }
+    60%{ transform: scale(18); opacity: .18; }
+    100%{transform: scale(26); opacity: 0; }
+  }
+  
+  /* Галерея кейсов: ступенчатый вход карточек */
+  .casesGrid { will-change: transform; }
+  .caseCard {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 0;
+    padding-bottom: calc(515 / 648 * 100%);
+    background-color: #333;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: transform 220ms ease, box-shadow 220ms ease, opacity var(--in-duration) ease;
+  }
+  .in .caseCard { opacity: 1; transform: translateY(0); }
+  .d0 { transition-delay: 80ms; }
+  .d1 { transition-delay: 140ms; }
+  
+  /* hover: зум картинки + подъём оверлея + мягкая тень */
+  .caseImage {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 450ms cubic-bezier(.22,.61,.36,1);
+  }
+  .caseCard:hover .caseImage { transform: scale(1.05); }
+  
+  .caseOverlay {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 90%;
+    background: #6E40C9;
+    border-radius: 10px;
+    color: #fff;
+    padding: 1rem;
+    box-sizing: border-box;
+    min-height: 101px;
+    height: 101px;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    bottom: 14px; /* фиксируем у низа карточки */
+    transition: transform 260ms ease, box-shadow 260ms ease, background 220ms ease;
+    box-shadow: 0 16px 40px -18px rgba(110,64,201,0.55);
+  }
+  .caseCard:hover .caseOverlay {
+    transform: translateX(-50%) translateY(0);
+    background: linear-gradient(180deg, #7b51e0, #6E40C9);
+  }
+  
+  /* кнопка-стрелка — лёгкий сдвиг и риппл */
+  .caseArrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1.25rem 3.125rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #FFFFFF;
+    background: none;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+  .caseArrow:hover { transform: translateX(2px); opacity: 0.95; }
+  
+  /* адаптивные правки твоего overlay — оставлены, добавим плавность */
+  @media (max-width: 1800px) {
+    .caseOverlay { height: 151px }
+  }
+  @media (max-width: 1260px) {
+    .caseOverlay { height: 191px; bottom: -80px; width: 95%; }
+  }
+  
+  /* Мобилка — твой стиль + риппл уже подключён */
+  .mobileCard { transition: transform 220ms ease, box-shadow 220ms ease, opacity var(--in-duration) ease; opacity: 0; transform: translateY(14px); }
+  .in .mobileCard { opacity: 1; transform: translateY(0); }
+  .d0 { transition-delay: 80ms; }
+  .d1 { transition-delay: 140ms; }
+  .mobileCard:hover { transform: translateY(-3px); box-shadow: 0 20px 50px -28px rgba(110,64,201,0.35); }
+  
+  /* Десктопная боковая панель — как у тебя */
+  @media (min-width: 769px) {
+    .timeline { position: relative; display: block; }
+    .lineVertical {
+      position: absolute; top: 30px; left: 50%;
+      transform: translateX(-50%); height: 102px; margin: 0;
+    }
+    .rotatedLabel {
+      position: absolute; top: 218px; left: -0.2rem;
+      transform: rotate(-90deg); transform-origin: left top;
+    }
+  }
+  
+  /* Адаптив — как было */
+  @media (max-width: 768px) {
+    .container { grid-template-columns: 1fr; }
+    .timeline {
+      flex-direction: row; gap: 10px; justify-content: center; align-items: center;
+      margin-bottom: 20px; width: 100%;
+    }
+    .lineVertical { height: 1px; width: 100%; margin: 0 10px; }
+    .rotatedLabel { position: static; transform: none; white-space: nowrap; }
+  
+    .header { flex-direction: column; align-items: center; text-align: left; }
+    .viewAllBtn { margin: 0 auto; }
+  
+    .casesGrid { grid-template-columns: 1fr; }
+  }
+  
+  /* уважение prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .projectsSection, .projectsSection * {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+  

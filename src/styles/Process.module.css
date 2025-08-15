@@ -1,139 +1,243 @@
 .processSection {
-    background: #0B0B0B;
-    position: relative;
-    padding: 3.75rem 10.27%; /* 60px сверху/снизу, ≈148px по бокам на 1441px */
-    min-height: 90vh;
-  }
-  
-  .processContainer {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    column-gap: 2rem; /* ≈32px */
-    align-items: start;
-  }
-  
-  /* Стили для унифицированной боковой панели */
+  background: #0B0B0B;
+  position: relative;
+  padding: 3.75rem 10.27%;
+  min-height: 90vh;
+
+  /* интерактив */
+  --mx: 0;
+  --my: 0;
+  --in-duration: 900ms;
+
+  /* «живой» фон: лёгкая сетка + градиент, реагирующий на мышь */
+  background-image:
+    radial-gradient(
+      120% 140% at calc(50% + var(--mx)*40%) calc(50% + var(--my)*40%),
+      rgba(110, 64, 201, 0.18),
+      rgba(110, 64, 201, 0.06) 35%,
+      rgba(110, 64, 201, 0.0) 60%
+    ),
+    repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 2px,
+      transparent 2px,
+      transparent 120px
+    );
+  background-blend-mode: screen, normal;
+  animation: bgScroll 12s linear infinite;
+}
+@keyframes bgScroll {
+  0%   { background-position: 0 0,  60px 0; }
+  100% { background-position: 200px 0, 60px 0; }
+}
+
+/* входная анимация – по умолчанию всё слегка ниже и прозрачнее */
+.processSection .processContainer,
+.processSection .timeline,
+.processSection .titleMain,
+.processSection .titleSecondary,
+.processSection .programShell {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity var(--in-duration) ease,
+    transform var(--in-duration) ease;
+}
+
+/* при входе */
+.in .processContainer,
+.in .timeline,
+.in .titleMain,
+.in .titleSecondary,
+.in .programShell {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* лёгкая задержка для ступенчатого появления */
+.in .titleSecondary { transition-delay: 90ms; }
+.in .programShell   { transition-delay: 160ms; }
+
+/* ====== существующая сетка ====== */
+.processContainer {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 2rem;
+  align-items: start;
+}
+
+/* ====== timeline с «растущей» вертикальной линией ====== */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepNumber {
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: #FFFFFF;
+}
+
+.lineVertical {
+  width: 1px;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.25) 100%);
+  margin: 15px 0;
+  position: relative;
+  overflow: hidden;
+}
+.in .lineVertical::after {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 100%;
+  background: linear-gradient(180deg, #6E40C9, #A67EFF);
+  transform: translateY(-100%);
+  animation: growLine 900ms ease forwards;
+}
+@keyframes growLine { to { transform: translateY(0); } }
+
+.rotatedLabel {
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: #FFFFFF;
+  opacity: 0.85;
+}
+
+/* ====== заголовки с очень деликатным шиммером у main ====== */
+.titleMain {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4375rem;
+  color: #FFFFFF;
+  margin: 0;
+
+  background: linear-gradient(90deg, #fff, #d8c7ff, #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: shimmer 9s linear infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: 0% 0; }
+}
+
+.titleSecondary {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.4375rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 1rem;
+}
+
+/* ====== декоративный разделитель (если используешь .separator) ====== */
+.separator {
+  grid-column: 1 / -1;
+  margin: 17.34rem 0 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  background: linear-gradient(90deg, #C8A8FF, #6E40C9, #C8A8FF);
+  background-size: 200% 100%;
+  animation: lineSlide 8s ease-in-out infinite;
+  transform: rotate(180deg);
+}
+@keyframes lineSlide {
+  0%,100% { background-position: 0% 0; }
+  50%     { background-position: 100% 0; }
+}
+
+/* ====== оболочка для программы с 3D tilt ====== */
+.programShell {
+  --tx: 0; /* вращение по X (deg) */
+  --ty: 0; /* вращение по Y (deg) */
+  will-change: transform, box-shadow;
+  transform: perspective(1000px) rotateX(var(--ty)) rotateY(var(--tx));
+  transition: transform 260ms ease, box-shadow 260ms ease;
+  border-radius: 16px;
+}
+.programShell:hover {
+  box-shadow: 0 26px 70px -30px rgba(110, 64, 201, 0.45);
+}
+
+/* чтобы внутри не «мазалось» при transform */
+.programShell > * {
+  transform: translateZ(0);
+}
+
+/* ====== респонсив из твоего кода ====== */
+.processWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+@media (min-width: 769px) {
   .timeline {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
   }
-  
-  .stepNumber {
-    font-family: 'Montserrat', sans-serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 1rem;      /* 16px */
-    line-height: 1.25rem; /* 20px */
-    color: #FFFFFF;
-  }
-  
   .lineVertical {
-    width: 1px;
-    background: #FFFFFF;
-    margin: 15px 0;
-  }
-  
-  .rotatedLabel {
-    font-family: 'Montserrat', sans-serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: 1rem;
-    line-height: 1.25rem;
-    color: #FFFFFF;
-  }
-  
-  .titleMain {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 2rem;      /* 32px */
-    line-height: 2.4375rem; /* 39px */
-    color: #FFFFFF;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 102px;
     margin: 0;
   }
-  
-  .titleSecondary {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 2rem;
-    line-height: 2.4375rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 1rem;
+  .rotatedLabel {
+    position: absolute;
+    top: 208px;
+    left: -0.2rem;
+    transform: rotate(-90deg);
+    transform-origin: left top;
   }
-  
-  .separator {
-    grid-column: 1 / -1;
-    margin: 17.34rem 0 0; /* ≈445px сверху */
-    height: 0;
-    border-top: 5px solid #C8A8FF;
-    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .processContainer {
+    grid-template-columns: 1fr;
   }
+  .processWrapper { gap: 20px; }
+  .titleMain,
+  .titleSecondary { text-align: left; }
 
-  .processWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 100px;
+  .timeline {
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
   }
-  
-  /* Десктопная версия для боковой панели */
-  @media (min-width: 769px) {
-    .timeline {
-      position: relative;
-      display: block;
-    }
-    
-    .lineVertical {
-      position: absolute;
-      top: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 102px;
-      margin: 0;
-    }
-    
-    .rotatedLabel {
-      position: absolute;
-      top: 208px;
-      left: -0.2rem;
-      transform: rotate(-90deg);
-      transform-origin: left top;
-    }
-  }
-  
-  /* Мобильная версия */
-  @media (max-width: 768px) {
-    .processContainer {
-      grid-template-columns: 1fr;
-    }
-
-    .processWrapper {
-      gap: 20px;
-    }
-
-    .titleMain,
-    .titleSecondary {
-      text-align: left;
-    }
-
-    .timeline {
-      flex-direction: row;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-      width: 100%;
-    }
-
-    .lineVertical {
-      height: 1px;
-      width: 100%;
-      margin: 0 10px;
-    }
+  .lineVertical {
+    height: 1px;
+    width: 100%;
+    margin: 0 10px;
   }
 
-    @media (max-width: 420px) {
-    .processWrapper {
-      gap: 10px;
-    }
+  .programShell { box-shadow: none; } /* на мобилках тени поспокойнее */
+}
+
+@media (max-width: 420px) {
+  .processWrapper { gap: 10px; }
+}
+
+/* ====== если пользователь отключил анимации ====== */
+@media (prefers-reduced-motion: reduce) {
+  .processSection, .processSection * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
+}

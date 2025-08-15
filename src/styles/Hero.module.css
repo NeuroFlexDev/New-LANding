@@ -195,3 +195,225 @@
     font-size: 13px;
   }
 }
+
+/* ==== ADD: базовые переменные для параллакса и масштаба ==== */
+.hero {
+  /* было */
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #0B0B0B;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 3px,
+    transparent 3px,
+    transparent 132px
+  );
+  background-position: 60px 0;
+
+  /* ADD: переменные для параллакса и входной анимации */
+  --mx: 0;
+  --my: 0;
+  --parallax: 18px;      /* сила параллакса */
+  --glow: #6E40C9;
+  --glowSoft: rgba(110, 64, 201, 0.45);
+  --in-duration: 900ms;
+}
+
+/* ==== ADD: входная анимация секции ==== */
+.hero :where(.heroContent, .ellipsePrimary, .ellipseSecondary, .ellipseTertiary) {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--in-duration) ease,
+    transform var(--in-duration) ease;
+}
+.in :where(.heroContent, .ellipsePrimary, .ellipseSecondary, .ellipseTertiary) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==== REPLACE: эллипсы — пульсация и параллакс ==== */
+.ellipsePrimary,
+.ellipseSecondary,
+.ellipseTertiary {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, filter, opacity;
+  animation: float 12s ease-in-out infinite, pulse 6s ease-in-out infinite;
+  /* параллакс от мыши */
+  transform: translate(
+    calc(var(--mx) * var(--parallax) * 1.2),
+    calc(var(--my) * var(--parallax) * 1.0)
+  );
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(0, -10px); }
+}
+@keyframes pulse {
+  0%, 100% { filter: blur(700px) brightness(1); }
+  50%      { filter: blur(740px) brightness(1.08); }
+}
+
+/* твои размеры/позиции оставляем как были */
+.ellipsePrimary {
+  width: 36.6vw;
+  height: 36.6vw;
+  left: 31.6vw;
+  top: -6.6vh;
+  background: linear-gradient(180deg, #a77eff6e 0%, #724bff5b 100%);
+  background-blend-mode: plus-lighter;
+}
+.ellipseSecondary {
+  width: 24vw;
+  height: 24vw;
+  left: 71.75vw;
+  top: 52.05vh;
+  background: #c8a8ff35;
+}
+.ellipseTertiary {
+  width: 29.7vw;
+  height: 29.7vw;
+  left: -2.22vw;
+  top: 34.06vh;
+  background: #2d1f478b;
+  animation-duration: 14s, 7s; /* зададим другой ритм */
+}
+
+/* ==== ADD: заголовок с лёгким шиммером ==== */
+.title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600; /* чуть плотнее для «силы» */
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 1.2;
+  margin: 0;
+  background: linear-gradient(90deg, #fff, #d8c7ff, #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: shimmer 6s linear infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: 0% 0; }
+}
+
+/* ==== UPDATE: подзаголовок с fade-in задержкой ==== */
+.subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: clamp(14px, 2.5vw, 16px);
+  line-height: 20px;
+  margin: 5rem 0 0;
+  opacity: 0.9;
+  transition: opacity var(--in-duration) ease;
+}
+.in .subtitle { opacity: 1; }
+
+/* ==== ADD: «живые» кнопки ==== */
+.buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  position: relative;
+  padding: 20px 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease, border-color 220ms ease;
+  transform: translateZ(0); /* включаем композитинг */
+}
+
+/* Главная кнопка – мягкое свечение и микро-скейл */
+.primaryBtn {
+  color: #FFFFFF;
+  background: #6E40C9;
+  border: none;
+  box-shadow:
+    0 0 0 0 rgba(110, 64, 201, 0),
+    0 10px 30px -10px rgba(110, 64, 201, 0.5);
+}
+.primaryBtn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 0 0 6px rgba(110, 64, 201, 0.18),
+    0 14px 40px -10px rgba(110, 64, 201, 0.65);
+}
+.primaryBtn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* Вторая — стеклянная с анимированной рамкой */
+.secondaryBtn {
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid #6E40C9;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 0 rgba(110, 64, 201, 0);
+}
+.secondaryBtn:hover {
+  border-color: #8c67ff;
+  background: rgba(110, 64, 201, 0.1);
+  box-shadow: inset 0 0 30px rgba(110, 64, 201, 0.15);
+  transform: translateY(-2px);
+}
+.secondaryBtn:active { transform: translateY(0); }
+
+/* ==== ADD: фокус-видимость для клавиатуры ==== */
+.primaryBtn:focus-visible,
+.secondaryBtn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,0.5),
+    0 0 0 8px rgba(110, 64, 201, 0.4);
+}
+
+/* ==== UPDATE: heroContent — лёгкий fade-up (уже частично есть через .in) ==== */
+.heroContent {
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 1096px;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 0 1rem;
+}
+
+/* ==== Мобильные правки остаются, но уменьшим blur-анимацию ==== */
+@media (max-width: 480px) {
+  .ellipsePrimary,
+  .ellipseSecondary,
+  .ellipseTertiary {
+    filter: blur(150px); /* как было */
+    animation: float 10s ease-in-out infinite, pulseMob 6s ease-in-out infinite;
+  }
+  @keyframes pulseMob {
+    0%,100% { filter: blur(150px) brightness(1); }
+    50%     { filter: blur(170px) brightness(1.06); }
+  }
+}
+
+/* ==== Доступность: если пользователь выключил анимации ==== */
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .hero * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

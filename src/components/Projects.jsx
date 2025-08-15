@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Projects.module.css';
 import arrowLeft from '../assets/icons/arrowLeft.svg';
 import abeonaImg from '../assets/icons/abeona.svg';
@@ -21,24 +21,54 @@ const cases = [
 
 export default function Projects() {
   const [isMobile, setIsMobile] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1110);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth <= 1110);
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Вход секции + параллакс эллипса
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && el.classList.add(styles.in)),
+      { threshold: 0.2 }
+    );
+    io.observe(el);
+
+    const onMove = (ev) => {
+      const r = el.getBoundingClientRect();
+      const x = (ev.clientX - r.left) / r.width - 0.5;
+      const y = (ev.clientY - r.top) / r.height - 0.5;
+      el.style.setProperty('--mx', x.toFixed(3));
+      el.style.setProperty('--my', y.toFixed(3));
+    };
+    el.addEventListener('mousemove', onMove);
+
+    return () => {
+      io.disconnect();
+      el.removeEventListener('mousemove', onMove);
+    };
+  }, []);
+
   const handleCaseClick = (index) => {
-    if (index === 1) {
-      window.open('https://learn.neuroflex.ru/learn/', '_blank');
-    }
+    if (index === 1) window.open('https://learn.neuroflex.ru/learn/', '_blank');
+  };
+
+  const onRipple = (e) => {
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    btn.style.setProperty('--rx', `${e.clientX - rect.left}px`);
+    btn.style.setProperty('--ry', `${e.clientY - rect.top}px`);
   };
 
   return (
-    <section className={styles.projectsSection}>
+    <section id="cases" className={styles.projectsSection} ref={sectionRef}>
       <div className={styles.blurEllipse} />
 
       <div className={styles.container}>
@@ -61,28 +91,30 @@ export default function Projects() {
                 Наши проекты — отражение будущего искусственного интеллекта.
               </p>
             </div>
-            <button className={styles.viewAllBtn}>
+            <button className={styles.viewAllBtn} onMouseDown={onRipple}>
               Посмотреть все работы
               <img src={arrowLeft} alt="->" />
+              <span className={styles.ripple} aria-hidden="true" />
             </button>
           </div>
 
           {!isMobile && (
             <div className={`${styles.casesGrid} ${styles.desktopOnly}`}>
               {cases.map((c, i) => (
-                <div key={i} className={styles.caseCard}>
+                <div key={i} className={`${styles.caseCard} ${styles[`d${i}`]}`}>
                   <img src={c.img} alt={c.title} className={styles.caseImage} />
                   <div className={styles.caseOverlay}>
                     <div>
                       <h5 className={styles.caseTitle}>{c.title}</h5>
                       <p className={styles.caseDesc}>{c.desc}</p>
                     </div>
-                    {/* Передаем индекс элемента в обработчик */}
-                    <button 
-                      className={styles.caseArrow} 
+                    <button
+                      className={styles.caseArrow}
                       onClick={() => handleCaseClick(i)}
+                      onMouseDown={onRipple}
                     >
                       <img src={arrowLeftWhite} alt="" />
+                      <span className={styles.ripple} aria-hidden="true" />
                     </button>
                   </div>
                 </div>
@@ -93,23 +125,24 @@ export default function Projects() {
           {isMobile && (
             <div className={`${styles.mobileCases} ${styles.mobileOnly}`}>
               {cases.map((c, i) => (
-                <div key={i} className={styles.mobileCard}>
+                <div key={i} className={`${styles.mobileCard} ${styles[`d${i}`]}`}>
                   <img src={c.img} alt={c.title} className={styles.mobileImage} />
                   <div className={styles.mobileCardContent}>
                     <h5 className={styles.mobileCardTitle}>{c.title}</h5>
                     <p className={styles.mobileCardDesc}>{c.desc}</p>
-                    {/* Передаем индекс элемента в обработчик */}
-                    <button 
+                    <button
                       className={styles.mobileCardButton}
                       onClick={() => handleCaseClick(i)}
+                      onMouseDown={onRipple}
                     >
                       Подробнее
                       <img src={arrowLeftWhiteMobile} alt="" />
+                      <span className={styles.ripple} aria-hidden="true" />
                     </button>
                   </div>
                 </div>
               ))}
-            </div> 
+            </div>
           )}
         </div>
       </div>

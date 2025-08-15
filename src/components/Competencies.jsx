@@ -1,30 +1,43 @@
 import React from 'react';
 import styles from '../styles/Competencies.module.css';
+import arrowLeft from '../assets/icons/arrowLeft.svg';
+import aiImg from '../assets/icons/ai.svg';
+import webImg from '../assets/icons/web.svg';
+import designImg from '../assets/icons/design.svg';
+import integrationImg from '../assets/icons/integration.svg';
+import devopsImg from '../assets/icons/devops.svg';
+import mvpImg from '../assets/icons/mvp.svg';
 
 const cards = [
   {
     title: 'AI/ML решения',
     desc: 'Разработка и внедрение моделей машинного обучения',
+    img: aiImg,
   },
   {
     title: 'Веб-разработка',
     desc: 'Создание фронтенда и бэкенда под вашу задачу',
+    img: webImg,
   },
   {
     title: 'UI/UX дизайн',
     desc: 'Проектирование интерфейсов и пользовательских сценариев',
+    img: designImg,
   },
   {
     title: 'Интеграция',
     desc: 'Внедрение решений в ваши системы и пайплайны',
+    img: integrationImg,
   },
   {
     title: 'DevOps и инфраструктура',
     desc: 'Оркестрация, контейнеризация и CI/CD',
+    img: devopsImg,
   },
   {
     title: 'MVP и прототипы',
     desc: 'Быстрый вывод рабочих прототипов на рынок',
+    img: mvpImg,
   },
 ];
 
@@ -37,7 +50,7 @@ export default function Competencies() {
         {/* Таймлайн слева */}
         <div className={styles.timeline}>
           <div className={styles.stepNumber}>3</div>
-          <div className={styles.lineVertical} />
+          <div className={styles.lineVertical}></div>
           <div className={styles.rotatedLabel}>Компетенции</div>
         </div>
 
@@ -57,15 +70,20 @@ export default function Competencies() {
             </div>
             <button className={styles.discussBtn}>
               Обсудить проект
+              <img src={arrowLeft} alt="" />
             </button>
           </div>
 
           <div className={styles.cardsGrid}>
             {cards.map((c, i) => (
               <div key={i} className={styles.card}>
-                <div className={styles.cardIcon} />
-                <h5 className={styles.cardTitle}>{c.title}</h5>
-                <p className={styles.cardDesc}>{c.desc}</p>
+                <div style={{ textAlign: 'center', marginBottom: 'auto', marginTop: 'auto' }}>
+                  <img src={c.img} alt="icon" className={styles.cardIcon} />
+                </div>
+                <div className={styles.cardContent}>
+                  <h5 className={styles.cardTitle}>{c.title}</h5>
+                  <p className={styles.cardDesc}>{c.desc}</p>
+                </div>
               </div>
             ))}
           </div>

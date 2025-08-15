@@ -31,31 +31,29 @@
   }
   
   /* Таймлайн слева */
-  .timeline {
+ .timeline {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+  
   .stepNumber {
     font-family: 'Montserrat', sans-serif;
     font-style: italic;
     font-weight: 300;
-    font-size: 1rem;      /* 16px */
-    line-height: 1.25rem; /* 20px */
+    font-size: 1rem;
+    line-height: 1.25rem;
     color: #FFFFFF;
   }
+  
   .lineVertical {
-    position: absolute;
-    top: 1.875rem; /* 30px */
-    left: 50%;
-    transform: translateX(-50%) rotate(90deg);
-    width: 102px;
-    border-top: 1px solid #FFFFFF;
+    width: 1px;
+    background: #FFFFFF;
+    margin: 15px 0;
   }
+  
   .rotatedLabel {
-    position: absolute;
-    top: 13rem; /* ≈208px */
-    left: -0.5rem;
-    transform: rotate(-90deg);
-    transform-origin: left top;
     font-family: 'Montserrat', sans-serif;
     font-style: italic;
     font-weight: 300;
@@ -69,7 +67,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 1rem;
     margin-bottom: 2rem;
   }
@@ -112,33 +110,42 @@
     border: 1px solid #6E40C9;
     border-radius: 0.9375rem; /* 15px */
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   
   /* Сетка карточек */
   .cardsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
   
   /* Одна карточка */
   .card {
     position: relative;
-    background: #0B0B0B; /* совпадает с фоном секции */
     border: 1px solid #212020;
     border-radius: 0.625rem; /* 10px */
     padding: 1.25rem; /* 20px */
     box-sizing: border-box;
-    text-align: center;
+    text-align: left;
     overflow: hidden;
+    background-image: url('../assets/icons/backgroundCards.svg');
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
   }
   .cardIcon {
     width: 5.3125rem;  /* 85px */
     height: 5.3125rem;
-    margin: 0 auto 1rem;
-    /* здесь можно вставить SVG-иконку или CSS-вектор */
-    background: rgba(110, 64, 201, 0.2);
-    border-radius: 50%;
+    text-align: center;
+  }
+  .cardContent {
+    width: 100%; /* Занимает всю ширину */
+    margin-top: auto;
   }
   .cardTitle {
     font-family: 'Montserrat', sans-serif;
@@ -156,19 +163,77 @@
     color: #FFFFFF;
     margin: 0;
   }
+/* Десктопная версия для боковой панели */
+  @media (min-width: 769px) {
+    .timeline {
+      position: relative;
+      display: block;
+    }
+    
+    .lineVertical {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 102px;
+      margin: 0;
+    }
+    
+    .rotatedLabel {
+      position: absolute;
+      top: 260px;
+      left: -0.2rem;
+      transform: rotate(-90deg);
+      transform-origin: left top;
+    }
+  }
   
   /* Адаптив */
   @media (max-width: 768px) {
     .container {
       grid-template-columns: 1fr;
     }
-    .timeline { display: none; }
+    .timeline {
+      flex-direction: row;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    
+    .lineVertical {
+      height: 1px;
+      width: 100%;
+      margin: 0 10px;
+    }
+    
+    .rotatedLabel {
+      position: static;
+      transform: none;
+      white-space: nowrap;
+    }
+    
     .contentHeader {
       flex-direction: column;
       align-items: center;
-      text-align: center;
+      text-align: left;
     }
-    .titles { max-width: 100%; }
-    .discussBtn { margin-top: 1rem; }
+    
+    .titles {
+      max-width: 100%;
+    }
+    
+    .discussBtn {
+      margin-top: 1rem;
+    }
+    
+    .cardsGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .card {
+      min-height: auto;
+    }
   }
   
